@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import { HttpHeaders } from '@angular/common/http';
+import { bankAccount } from '../Models/bankAccount';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +12,34 @@ export class AccountService {
   constructor(private httpClient : HttpClient) { }
 
   /**
-   * return an observable which produces a response from a request to GET /v3/articles from the spaceflight api.
+   * return an observable which produces a response from a request to post an account type.
    */
-  ()) : Observable<any>{
-    return this.httpClient.get("");
+  createNewAccount (id : number, type : String ):Observable<bankAccount>{
+    let header : HttpHeaders = new HttpHeaders();
+    header.append("accept", "text/json");
+    header.append("Access-Control-Allow-Origin", "*");
+    return this.httpClient.post<bankAccount>("http://127.0.0.1:9000/account/" + id +"/" + type, {headers:header});
   }
 
   /**
-   * TODO: return an observable which produces a response from a request to GET /v3/reports from the spaceflight api.
-   * The full URL would be https://api.spaceflightnewsapi.net/v3/reports.
+   * return an observable which produces a response from a request to GET a list of transactions.
+   * 
    */
-  () : Observable<any>{
-    return this.httpClient.get("");
+  getTransactions (id: number):Observable<bankAccount>{
+    let header : HttpHeaders = new HttpHeaders();
+    header.append("accept", "text/json");
+    header.append("Access-Control-Allow-Origin", "*");
+    return this.httpClient.get<bankAccount>("http://127.0.0.1:9000/login/" + id, {headers:header});//will need exact parameter from the database
   }
 
   /**
-   * return an observable which produces a response from a request to GET /v3/reports/{id} from the spaceflight api.
+   * return an observable which produces a response from a request to patch a deposit amount to an account using account nuumber.
    */
-  (id : number) : Observable<any>{
-    return this.httpClient.get("")
+  depositToAccount(id : number, deposit : number) : Observable<any>{
+    let header : HttpHeaders = new HttpHeaders();
+    header.append("accept", "text/json");
+    header.append("Access-Control-Allow-Origin", "*");
+    return this.httpClient.get<bankAccount>("http://127.0.0.1:9000/account/" + id + "/" + deposit, {headers:header});//will need exact parameter
+    
   }
 }
