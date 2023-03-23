@@ -27,6 +27,14 @@ export class LoginComponent implements OnInit {
 
   }
 
+  checkPassword(){
+    let password = document.getElementById("password");
+    let confirmPassword = document.getElementById("confirmPassword");//check to ensure 
+    if(password != confirmPassword){
+      alert("Passwords do not match");
+    }
+  }
+
 }
 
 
