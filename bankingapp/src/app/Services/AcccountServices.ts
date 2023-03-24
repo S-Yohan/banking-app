@@ -14,11 +14,11 @@ export class AccountService {
   /**
    * return an observable which produces a response from a request to post an account type.
    */
-  createNewAccount (id : number, type : String ):Observable<bankAccount>{
+  createNewAccount (email: String, type : String ):Observable<bankAccount>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.post<bankAccount>("http://127.0.0.1:9000/account/" + id +"/" + type, {headers:header});
+    return this.httpClient.post<bankAccount>(`http://127.0.0.1:9000/account/${email}/${type}`, {headers:header});
   }
 
   /**
@@ -29,7 +29,7 @@ export class AccountService {
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.get<bankAccount>("http://127.0.0.1:9000/login/" + id, {headers:header});//will need exact parameter from the database
+    return this.httpClient.get<bankAccount>(`http://127.0.0.1:9000/login/${id}`, {headers:header});
   }
 
   /**
@@ -39,7 +39,7 @@ export class AccountService {
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.get<bankAccount>("http://127.0.0.1:9000/account/" + id + "/" + deposit, {headers:header});//will need exact parameter
+    return this.httpClient.get<bankAccount>(`http://127.0.0.1:9000/account/${id}/${deposit}`, {headers:header});//will need exact parameter
     
   }
 }

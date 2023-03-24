@@ -1,0 +1,5 @@
+<ul>Recent Transactions:
+    <li *ngFor="let transaction of transactions">
+        {{transaction.date}} - ${{transaction.transamount}} - {{transaction.transtype}}
+    </li>
+</ul>

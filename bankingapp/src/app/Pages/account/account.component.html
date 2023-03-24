@@ -10,23 +10,24 @@
 		<h1>Bank Account Page</h1>
 		<div class="account">
 			<h2>Savings Account</h2>
-			<p>Account Number: <span class="acct-number">123456789</span></p>
-			<p>Balance: $<span class="balance">1000.00</span></p>
+			<p>Account Number: <span class="acct-number">{{account.accountNumber}}</span></p>
+			<p>Balance: $<span class="balance">{{account.balance}}</span></p>
 		</div>
 		<div class="account">
 			<h2>Checking Account</h2>
-			<p>Account Number: <span class="acct-number">987654321</span></p>
-			<p>Balance: $<span class="balance">500.00</span></p>
+			<p>Account Number: <span class="acct-number">{{account.accountNumber}}</span></p>
+			<p>Balance: $<span class="balance">{{account.balance}}</span></p>
 		</div>
 		<div class="transactions">
-			<h2>Recent Transactions</h2>
+			<h2>Recent Transactions</h2> 
 			<ul>
 				<li>03/20/2023 - $100.00 - Deposit</li>
 				<li>03/19/2023 - $50.00 - Withdrawal</li>
 				<li>03/15/2023 - $200.00 - Bill Payment</li>
 				<li>03/12/2023 - $75.00 - Funds Transfer</li>
+				<app-transactions></app-transactions>
 			</ul>
-            <button class="view-transactions" style = "justify-content: center;">View All Transactions</button>
+            
 		</div>
 		<div class="buttons">
             <button class="deposit">Deposit</button>

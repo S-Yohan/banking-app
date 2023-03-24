@@ -10,7 +10,7 @@ import { UserService } from 'src/app/Services/UserService';
 export class LoginComponent implements OnInit {
 
   user : User ={
-    id: 0,
+    
     name: '',
     email: '',
     password: '',
