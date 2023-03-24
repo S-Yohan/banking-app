@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Bank Account Page</title>
 	<link rel="stylesheet" href="account.component.css">
 </head>
+
 <body>
 	<div class="container">
 		<h1>Bank Account Page</h1>
@@ -19,22 +21,20 @@
 			<p>Balance: $<span class="balance">{{account.balance}}</span></p>
 		</div>
 		<div class="transactions">
-			<h2>Recent Transactions</h2> 
+			<h2>Recent Transactions</h2>
+			<app-transactions></app-transactions>
+
 			<ul>
-				<li>03/20/2023 - $100.00 - Deposit</li>
-				<li>03/19/2023 - $50.00 - Withdrawal</li>
-				<li>03/15/2023 - $200.00 - Bill Payment</li>
-				<li>03/12/2023 - $75.00 - Funds Transfer</li>
-				<app-transactions></app-transactions>
+				<li>03/20/2023 - $500.00 - Deposit</li>
 			</ul>
-            
+
 		</div>
 		<div class="buttons">
-            <button class="deposit">Deposit</button>
+			<button class="deposit">Deposit</button>
 			<button class="bill-pay">Bill Payments</button>
 			<button class="fund-transfer">Funds Transfer</button>
 		</div>
 	</div>
 </body>
-</html>
 
+</html>

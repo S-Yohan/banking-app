@@ -2,7 +2,7 @@ export interface Transactions{
     transid: number;
     transtype: string;
     transamount: number;
-    date: Date;
+    date: string;
     status: string;
 
 

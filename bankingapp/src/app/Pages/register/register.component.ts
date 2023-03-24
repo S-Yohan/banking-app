@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   name: string = "";
   email: string = "";
   password: string = "";
+  confirmPassword: string = "";
   address: string = "";
   type: string = "";
 
@@ -27,8 +28,8 @@ export class RegisterComponent implements OnInit {
   }
 
   checkPassword(): any {
-    let password = document.getElementById("password");
-    let confirmPassword = document.getElementById("confirm_password");//check to ensure 
+    let password = this.password;
+    let confirmPassword = this.password;
     while (password != confirmPassword) {
       alert("Passwords do not match" + "\n" + "Please try again");
     }
@@ -36,14 +37,15 @@ export class RegisterComponent implements OnInit {
 
  
   onClick(): void {
-    this.router.navigate(['/account']);
+    
     let user: User = {
       name: this.name,
       email: this.email,
       password: this.password,
       address: this.address
     }; this.userservice.createNewUser(user).subscribe(json =>{console.log(json)}) // != null ? alert("User created") : alert("User not created");
-    
+    this.checkPassword();
+    this.router.navigate(['/account']);
     
   }
 
