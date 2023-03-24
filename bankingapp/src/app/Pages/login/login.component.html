@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Bank Login Page</title>
+    <link rel="stylesheet" href="login.component.css">
+  </head>
+  <body>
+    <div class="container">
+      <form action="#" method="post">
+        <h1>Login</h1>
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required [(ngModel)] = "user.name" [ngModelOptions]="{standalone: true}">
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required [(ngModel)] = "user.password" [ngModelOptions]="{standalone: true}">
+
+        <button type="submit" routerLink = "/account">Login</button>
+      </form>
+    </div>
+  </body>
+</html>

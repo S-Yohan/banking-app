@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Bank Account Page</title>
+	<link rel="stylesheet" href="account.component.css">
+</head>
+
+<body>
+	<div class="container">
+		<h1>Bank Account Page</h1>
+		<div class="account">
+			<h2>Savings Account</h2>
+			<p>Account Number: <span class="acct-number">{{account.accountNumber}}</span></p>
+			<p>Balance: $<span class="balance">{{account.balance}}</span></p>
+		</div>
+		<div class="account">
+			<h2>Checking Account</h2>
+			<p>Account Number: <span class="acct-number">{{account.accountNumber}}</span></p>
+			<p>Balance: $<span class="balance">{{account.balance}}</span></p>
+		</div>
+		<div class="transactions">
+			<h2>Recent Transactions</h2>
+			<app-transactions></app-transactions>
+
+			<ul>
+				<li>03/20/2023 - $500.00 - Deposit</li>
+			</ul>
+
+		</div>
+		<div class="buttons">
+			<button class="deposit">Deposit</button>
+			<button class="bill-pay">Bill Payments</button>
+			<button class="fund-transfer">Funds Transfer</button>
+		</div>
+	</div>
+</body>
+
+</html>

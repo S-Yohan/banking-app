@@ -1,0 +1,6 @@
+<app-get-transaction-button></app-get-transaction-button>
+<ul>
+    <li *ngFor="let transaction of transactions">
+        {{transaction.date}} - ${{transaction.transamount}} - {{transaction.transtype}}
+    </li>
+</ul>
