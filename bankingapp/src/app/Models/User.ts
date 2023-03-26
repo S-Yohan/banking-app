@@ -5,4 +5,5 @@ export interface User{
     password?: string;
     confirmPassword?: string;
     address?: string; //city only.
+    type?: string;//had to add this to be able the opneing account type.
 }

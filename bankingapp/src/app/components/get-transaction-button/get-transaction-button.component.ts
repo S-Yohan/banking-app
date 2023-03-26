@@ -1,6 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TransactionService } from 'src/app/Services/TransactionService';
-import { bankAccount } from 'src/app/Models/bankAccount';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-get-transaction-button',
@@ -9,30 +7,19 @@ import { bankAccount } from 'src/app/Models/bankAccount';
 })
 export class GetTransactionButtonComponent implements OnInit {
   
-  @Input()
-  account: bankAccount = {
-    accountNumber: "",
-    type: "",
-    balance: 0,
-    
-  }
   
   @Output()
   updateevent: EventEmitter<any> = new EventEmitter();
 
-  constructor(private transactionservice: TransactionService) { }
+  constructor() { }
 
   ngOnInit(): void {
 
   }
 
-  getTransactions() {
-    this.transactionservice.getAllTransactions(this.account.accountNumber).subscribe(
-      (json) => {this.updateevent.emit(json);})
-    
-  }
-
- 
+ updateTransactions(){
+  this.updateevent.emit();
+ }
 }
 
 

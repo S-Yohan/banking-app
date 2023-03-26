@@ -11,6 +11,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  
+  user: User = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+    type: ""
+  };
+
   name: string = "";
   email: string = "";
   password: string = "";
@@ -18,13 +28,16 @@ export class RegisterComponent implements OnInit {
   address: string = "";
   type: string = "";
 
-
-  constructor(private accountService: AccountService,
-    private userservice: UserService, private router : Router) { }
-
   
 
+
+  constructor(private accountService: AccountService,
+    private userservice: UserService, private router: Router) { }
+
+
+
   ngOnInit(): void {
+        
   }
 
   checkPassword(): any {
@@ -32,32 +45,32 @@ export class RegisterComponent implements OnInit {
     let confirmPassword = this.password;
     while (password != confirmPassword) {
       alert("Passwords do not match" + "\n" + "Please try again");
-    }
+    } return true;
   }
 
- 
+
   onClick(): void {
-    
-    let user: User = {
-      name: this.name,
-      email: this.email,
-      password: this.password,
-      address: this.address
-    }; this.userservice.createNewUser(user).subscribe(json =>{console.log(json)}) // != null ? alert("User created") : alert("User not created");
-    this.checkPassword();
-    this.router.navigate(['/account']);
-    
+    while (this.checkPassword()) {
+      this.addUser();
+      this.addAccount();
+      this.router.navigate(['/account']);
+    }
+
+  }
+
+  addUser(): any {
+     this.userservice.createNewUser(this.user).subscribe(json => { console.log(json) })
   }
 
   addAccount(): any {
-    this.accountService.createNewAccount(this.email, this.type).subscribe();
-    //alert("Account created");
+    this.accountService.createNewAccount(this.user.name,this.user.type).subscribe(json => { console.log(json) });
   }
-
-
-
-
 }
+
+
+
+
+
 
 
 
