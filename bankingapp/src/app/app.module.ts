@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { GetTransactionButtonComponent } from './components/get-transaction-button/get-transaction-button.component';
-import { DepositComponent } from './deposit/deposit.component';
+import { DepositComponent } from './Pages/deposit/deposit.component';
 //import {AuthGuardGuard} from './Services/auth-guard.guard';
 
 @NgModule({

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { bankAccount } from 'src/app/Models/bankAccount';
 import { Transactions } from 'src/app/Models/Transactions';
 import { TransactionService } from 'src/app/Services/TransactionService';
-import { DepositComponent } from 'src/app/deposit/deposit.component';
+import { DepositComponent } from 'src/app/Pages/deposit/deposit.component';
 import { User } from 'src/app/Models/User';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { UserService } from 'src/app/Services/UserService';
@@ -45,6 +45,7 @@ export class AccountComponent implements OnInit {
     name: "",
     address: "",
     email: "",
+    loggedin: false,
 
   }
 
@@ -58,19 +59,28 @@ export class AccountComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.account.checkingbalance = 500;
-    this.account.savingsbalance = 0;
     this.route.paramMap.subscribe((params: ParamMap) => 
     {this.user.username= (params.get('username') as string);
   });
+
+    let updatAccountNumbers = this.getAccountNumbers();
+    this.account.checkingbalance = 500;
+    this.account.savingsbalance = 0;
+    this.account.checking_accountNumber = updatAccountNumbers.checking_accountNumber;
+    this.account.savings_accountNumber =  updatAccountNumbers.savings_accountNumber;
+    
+  
     }
   
-
-  setClientAccount(eventData: any) {
-    this.accountService.getAccountById(eventData.id).subscribe(json => this.account = json);
-
-  }
-
+    getAccountNumbers(): bankAccount {
+      this.accountService.getAccountByUsername(this.user.username).subscribe(
+        (json) => {
+          this.account = json;
+          console.log(json);
+        }
+      ); return this.account;
+    }
+  
   deposit(eventData: { depositAmount: number }) {
     this.account.checkingbalance += eventData.depositAmount;
 

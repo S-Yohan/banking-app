@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
     username: "",
     password: "",
     address: "",
+    loggedin: false,
 
   };
 

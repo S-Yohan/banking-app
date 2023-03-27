@@ -17,10 +17,11 @@ export class LoginComponent implements OnInit {
     username: '',
     email: '',
     password: '',
-    address: ''
+    address: '',
+    loggedin: false,
   }
   
-  @Output() updateevent = new EventEmitter<any>();
+  
   constructor(private userService: UserService, private router : Router) { }
   
   ngOnInit(): void {
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-
+    this.user.loggedin = true;
     this.userService.logInUser(this.user).subscribe(
       (json) => {
         this.user = json;
@@ -46,7 +47,6 @@ export class LoginComponent implements OnInit {
       alert("You have exceeded the number of attempts" + "\n" + "Please try again in 5 minutes" 
     + "\n" + "Or contact customer service");
     } 
-    this.updateevent.emit(this.user);
     this.router.navigate(['/account/'+ this.user.username]);
     
 

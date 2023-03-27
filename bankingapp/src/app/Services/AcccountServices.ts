@@ -31,11 +31,23 @@ export class AccountService {
     header.append("Access-Control-Allow-Origin", "*");
     return this.httpClient.get<bankAccount>(`http://127.0.0.1:9000/account/${id}`, {
     });
-
+  }
+  
+  getAccountByUsername(username: any): Observable<bankAccount> {
+    let header: HttpHeaders = new HttpHeaders();
+    header.append("accept", "text/json");
+    header.append("Access-Control-Allow-Origin", "*");
+    return this.httpClient.get<bankAccount>(`http://127.0.0.1:9000/account/${username}`, {responseType: 'json'});
+  }
 
     /**
      * return an observable which produces a response from a request to patch a deposit amount to an account using account nuumber.
      */
+    deposit(depositAmount: any, username: any): Observable<bankAccount> {
+      let header: HttpHeaders = new HttpHeaders();
+      header.append("accept", "text/json");
+      header.append("Access-Control-Allow-Origin", "*");
+      return this.httpClient.patch<bankAccount>(`http://http://127.0.0.1:9000/account/${username}/deposit`, { observe: 'body', headers: header });
 
 
   }

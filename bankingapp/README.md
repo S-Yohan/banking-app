@@ -25,3 +25,37 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+---Banking
+
+The main page URL route: `http://localhost:4200/`
+
+
+--From the main page a new client should be able to create a new client profile and open a new account with a click on the "create account" button.
+
+
+--the registration page URL: `http://localhost:4200/register`. On this page clients will input data "name", "username", "password", "confirmPassword", "email", and "address" (city only). All new clients will open an account with BOTH a savings and a checking account.
+--by clicking the "register" button, a POST request is sent to the server to persist the "client" object and the "account" object in their respective databases (Yes a JSON request body CAN hold two different types of objects).
+
+--the login page URL: `http://localhost:4200/login` On this page the clients will input data "username" and "password". By clicking the submit button a GET request is executed to the above url path to return a client object.
+
+-- Account page url: `http://localhost:4200/account/{username}` 
+On the account page OnInit automatically updates "savingsaccountNumber" and "checkingAccountNumber" as well as "savingsbalance"' and "checkingbalance".
+a GET request should be sent using the above URL to return the account object from the Accounts table.
+
+--Deposit page url: `http://localhost:4200/account/{username}/deposit`
+On the deposit page the client will input an amount for deposit "depositAmount". Clicking the deposit button should execute a patch request to update checkingbalance for the currently logged in user. The currenly loggin user will have its "loggedin" property set to true in the clients table.
+
+--Transfer page url: `http://localhost:4200/account/{username}/transfer`
+-this route needs to configured in the app.module.ts file as well as the app-routing.module.ts
+-On this page the user will input a "transfer amount", "Sender" account and a "Receiver" account.
+-the account table should be updated accordingly.
+-the transaction table should also be updated.
+
+--Bill Payments url: `http://localhost:4200/account/{username}/billpay`
+-this route needs to be configured in the app.module.ts file as well as the app-routing-module.ts
+-On this page the user will click the "Payee" button and select the payee from a list
+-The user will then put in a "Pay Amount".
+-the user will then click on the "Pay" button.
+-the transaction table will need to be updated as well as the account tables.
