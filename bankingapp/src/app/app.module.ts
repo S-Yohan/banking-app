@@ -36,10 +36,10 @@ import { DepositComponent } from './deposit/deposit.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'account/*', component: AccountComponent }, //canActivate: [AuthGuardGuard]},
+      { path: 'account/:username', component: AccountComponent }, //canActivate: [AuthGuardGuard]},
       { path: 'login', component: LoginComponent }, //canActivate: [AuthGuardGuard]},
       { path: 'register', component: RegisterComponent },//, canActivate: [AuthGuardGuard] },
-      { path: 'account/**/deposit', component: DepositComponent }
+      { path: 'account/:username/deposit', component: DepositComponent }
     ]),
 
   ],

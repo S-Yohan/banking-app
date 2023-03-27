@@ -10,8 +10,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'account/**', component: AccountComponent },
-  {path: 'account/**/deposit', component: DepositComponent}
+  { path: 'account/:username', component: AccountComponent },
+  {path: 'account/:username/deposit', component: DepositComponent}
 ];
 
 @NgModule({

@@ -6,6 +6,7 @@ import { DepositComponent } from 'src/app/deposit/deposit.component';
 import { User } from 'src/app/Models/User';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { UserService } from 'src/app/Services/UserService';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
 
@@ -36,18 +37,34 @@ export class AccountComponent implements OnInit {
     date: new Date()
   }
 
+  user: User = {
+
+    id: 0,
+    username: "",
+    password: "",
+    name: "",
+    address: "",
+    email: "",
+
+  }
+
 
 
 
 
   constructor(private transactionService: TransactionService,
-    private accountService: AccountService, private userService: UserService) { }
+    private accountService: AccountService, private userService: UserService,
+    private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
     this.account.checkingbalance = 500;
     this.account.savingsbalance = 0;
-  }
+    this.route.paramMap.subscribe((params: ParamMap) => 
+    {this.user.username= (params.get('username') as string);
+  });
+    }
+  
 
   setClientAccount(eventData: any) {
     this.accountService.getAccountById(eventData.id).subscribe(json => this.account = json);
@@ -56,7 +73,7 @@ export class AccountComponent implements OnInit {
 
   deposit(eventData: { depositAmount: number }) {
     this.account.checkingbalance += eventData.depositAmount;
-    
+
     this.transaction.transtype = "Deposit";
     this.transaction.transamount = eventData.depositAmount;
     this.transaction.account_debited = this.account.checking_accountNumber;
@@ -70,7 +87,7 @@ export class AccountComponent implements OnInit {
   }
 
   addTransaction(): void {
-    
+
     this.transactionService.postNewTransaction(this.transaction, this.transaction.transtype).subscribe(
       (json) => {
         this.transaction = json; console.log(json);

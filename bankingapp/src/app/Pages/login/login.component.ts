@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     + "\n" + "Or contact customer service");
     } 
     this.updateevent.emit(this.user);
-    this.router.navigate(['/account'+ this.user.username]);
+    this.router.navigate(['/account/'+ this.user.username]);
     
 
 
