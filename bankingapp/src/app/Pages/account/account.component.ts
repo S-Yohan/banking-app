@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { bankAccount } from 'src/app/Models/bankAccount';
 import { Transactions } from 'src/app/Models/Transactions';
 import { TransactionService } from 'src/app/Services/TransactionService';
+import { DepositComponent } from 'src/app/deposit/deposit.component';
+import { User } from 'src/app/Models/User';
+import { AccountService } from 'src/app/Services/AcccountServices';
+import { UserService } from 'src/app/Services/UserService';
+
+
 
 
 @Component({
@@ -12,19 +18,21 @@ import { TransactionService } from 'src/app/Services/TransactionService';
 export class AccountComponent implements OnInit {
 
   account: bankAccount = {
-    accountNumber: "",
-    balance: 0,
-    type: ""
+    savings_accountNumber: 0,
+    checking_accountNumber: 0,
+    savingsbalance: 0,
+    checkingbalance: 0,
+
   };
 
-  balance: number = 0;
-  accountNumber: string = "";
+
 
   transaction: Transactions = {
     transid: 0,
     transtype: "",
     transamount: 0,
-    account_posted_to: 0,
+    account_debited: 0,
+    account_credited: 0,
     date: new Date()
   }
 
@@ -32,34 +40,40 @@ export class AccountComponent implements OnInit {
 
 
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private transactionService: TransactionService,
+    private accountService: AccountService, private userService: UserService) { }
 
 
   ngOnInit(): void {
-    this.balance = this.account.balance;
-    this.accountNumber = this.account.accountNumber;
-    this.transaction.transtype, this.transaction.transamount;
-    this.transaction.account_posted_to;
+    this.account.checkingbalance = 500;
+    this.account.savingsbalance = 0;
+  }
 
+  setClientAccount(eventData: any) {
+    this.accountService.getAccountById(eventData.id).subscribe(json => this.account = json);
 
   }
 
-  deposit(): void { 
+  deposit(eventData: { depositAmount: number }) {
+    this.account.checkingbalance += eventData.depositAmount;
     
+    this.transaction.transtype = "Deposit";
+    this.transaction.transamount = eventData.depositAmount;
+    this.transaction.account_debited = this.account.checking_accountNumber;
   }
-
-  transfer(): void { 
+  transfer(): void {
 
   }
 
   billPay(): void {
 
-   }
+  }
 
   addTransaction(): void {
-    this.transactionService.postNewTransaction(this.transaction).subscribe(
+    
+    this.transactionService.postNewTransaction(this.transaction, this.transaction.transtype).subscribe(
       (json) => {
-        this.account = json; console.log(json);
+        this.transaction = json; console.log(json);
       }
     );
   }

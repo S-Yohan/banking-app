@@ -1,8 +1,10 @@
 export interface bankAccount {
     
-    type: string;
-    balance: number;
-    accountNumber: string;
+    
+    savingsbalance: number;
+    checkingbalance: number;
+    savings_accountNumber: number;
+    checking_accountNumber: number;
 
     
 }

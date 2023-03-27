@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/Models/User';
 import { bankAccount } from 'src/app/Models/bankAccount';
 import { AccountService } from 'src/app/Services/AcccountServices';
@@ -13,22 +13,31 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   
   user: User = {
+    id: 0,
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
     address: "",
-    type: ""
+    
   };
 
   name: string = "";
   email: string = "";
+  username: string = "";
   password: string = "";
   confirmPassword: string = "";
   address: string = "";
-  type: string = "";
-
   
+  account: bankAccount = {
+    savings_accountNumber: 0,
+    checking_accountNumber: 0,
+    checkingbalance: 500,
+    savingsbalance: 0,
+
+  }
+
+  @Output() registerEvent: EventEmitter<any> = new EventEmitter();
 
 
   constructor(private accountService: AccountService,
@@ -53,7 +62,7 @@ export class RegisterComponent implements OnInit {
     while (this.checkPassword()) {
       this.addUser();
       this.addAccount();
-      this.router.navigate(['/account']);
+      this.router.navigate(['/account/'+ this.user.username]);
     }
 
   }
@@ -63,7 +72,7 @@ export class RegisterComponent implements OnInit {
   }
 
   addAccount(): any {
-    this.accountService.createNewAccount(this.user.name,this.user.type).subscribe(json => { console.log(json) });
+    this.accountService.createNewAccount(this.account).subscribe(json => { console.log(json) });
   }
 }
 

@@ -1,9 +1,11 @@
 export interface User{
     
+    id?: number;
     name?: string;
-    email?: string; //email address is going be the username.
+    email?: string; 
+    username?: string;
     password?: string;
     confirmPassword?: string;
-    address?: string; //city only.
-    type?: string;//had to add this to be able the opneing account type.
+    address?: string; 
+    
 }

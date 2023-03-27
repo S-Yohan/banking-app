@@ -17,10 +17,11 @@ export class TransactionsComponent implements OnInit {
   
   transactions: Transactions [] = this.transactionService.transaction;
   
-  @Input()
+  
   transaction: Transactions = {
     transid: 0,
-    account_posted_to: 0,
+    account_debited: 0,
+    account_credited: 0,
     transtype: "",
     transamount: 0,
     date: new Date(),
@@ -36,12 +37,14 @@ export class TransactionsComponent implements OnInit {
   }
 
   updateTransactions(){
-    this.transactionService.getAllTransactions(this.transaction.account_posted_to).subscribe(
+    this.transactionService.getAllTransactions(this.transaction.account_debited).subscribe(
       (json) => {
         this.transactions = json;
       }
     );
   }
+
+  
 }
 
 

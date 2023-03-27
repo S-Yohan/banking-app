@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { GetTransactionButtonComponent } from './components/get-transaction-button/get-transaction-button.component';
+import { DepositComponent } from './deposit/deposit.component';
 //import {AuthGuardGuard} from './Services/auth-guard.guard';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { GetTransactionButtonComponent } from './components/get-transaction-butt
     RegisterComponent,
     AccountComponent,
     TransactionsComponent,
-    GetTransactionButtonComponent
+    GetTransactionButtonComponent,
+    DepositComponent
   ],
   imports: [
     BrowserModule,
@@ -34,12 +36,14 @@ import { GetTransactionButtonComponent } from './components/get-transaction-butt
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      {path: 'account', component: AccountComponent}, //canActivate: [AuthGuardGuard]},
-      {path: 'login', component: LoginComponent}, //canActivate: [AuthGuardGuard]},
-      { path: 'register', component: RegisterComponent}//, canActivate: [AuthGuardGuard] },
+      { path: 'account/*', component: AccountComponent }, //canActivate: [AuthGuardGuard]},
+      { path: 'login', component: LoginComponent }, //canActivate: [AuthGuardGuard]},
+      { path: 'register', component: RegisterComponent },//, canActivate: [AuthGuardGuard] },
+      { path: 'account/**/deposit', component: DepositComponent }
     ]),
 
   ],
+  
   providers: [],
   bootstrap: [AppComponent]
 })

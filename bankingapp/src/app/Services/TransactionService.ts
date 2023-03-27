@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { HttpHeaders } from '@angular/common/http';
 import { Transactions } from '../Models/Transactions';
+import { User } from '../Models/User';
+
 
 
 @Injectable({
@@ -15,18 +17,20 @@ export class TransactionService {
   constructor(private httpClient : HttpClient) { }
 
   
-  getAllTransactions(accnum: Number):Observable<any>{
+  getAllTransactions(accnum: number):Observable<any>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.post<any>(`http://127.0.0.1:9000/account/${accnum}`, {headers:header});
+    return this.httpClient.get<any>(`http://127.0.0.1:9000/account/${accnum}`, {headers:header});
   }
   
-  postNewTransaction(transaction : any):Observable<any>{
+  postNewTransaction(transaction: Transactions, type: string):Observable<any>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.post<any>(`http://127.0.0.1:9000/account/${transaction}`, {transaction}, {headers:header});
+    return this.httpClient.post<any>(`http://127.0.0.1:9000/account/${type}`, transaction);
+    
+    
   }
  
 }

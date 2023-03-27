@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 import { HttpHeaders } from '@angular/common/http';
 import { bankAccount } from '../Models/bankAccount';
 
@@ -9,33 +9,34 @@ import { bankAccount } from '../Models/bankAccount';
 })
 export class AccountService {
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   /**
    * return an observable which produces a response from a request to post an account type.
    */
-  createNewAccount (name: any, type : any ):Observable<bankAccount>{
-    let header : HttpHeaders = new HttpHeaders();
+  createNewAccount(account: bankAccount): Observable<bankAccount> {
+    let header: HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.post<bankAccount>(`http://127.0.0.1:9000/account/${name}/${type}`, {headers:header});
+    return this.httpClient.post<bankAccount>(`http://127.0.0.1:9000/register/`, account, { headers: header });
   }
 
   /**
-   * return an observable which produces a response from a request to GET a list of transactions.
+   * return an observable which produces a response from a request to GET an account by id.
    * 
    */
-  
-  
-  /**
-   * return an observable which produces a response from a request to patch a deposit amount to an account using account nuumber.
-   */
-  depositToAccount(id : number, deposit : number) : Observable<any>{
-    let header : HttpHeaders = new HttpHeaders();
+  getAccountById(id: any): Observable<bankAccount> {
+    let header: HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.get<any>(`http://127.0.0.1:9000/account/${id}/${deposit}`, {headers:header});//will need exact parameter
-    
+    return this.httpClient.get<bankAccount>(`http://127.0.0.1:9000/account/${id}`, {
+    });
+
+
+    /**
+     * return an observable which produces a response from a request to patch a deposit amount to an account using account nuumber.
+     */
+
+
   }
-  
 }
