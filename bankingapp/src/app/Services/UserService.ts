@@ -11,6 +11,8 @@ export class UserService {
 
   constructor(private httpClient : HttpClient) { }
 
+  userDatabase: User[] = [];
+
   
   createNewUser(user : User):Observable<User>{
     let header : HttpHeaders = new HttpHeaders();

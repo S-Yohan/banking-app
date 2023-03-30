@@ -17,7 +17,7 @@ export class GetTransactionButtonComponent implements OnInit {
 
   }
 
- updateTransactions(){
+ getTransactions(){
   this.updateevent.emit();
  }
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { bankAccount } from 'src/app/Models/bankAccount';
-import { Transactions } from 'src/app/Models/Transactions';
 import { TransactionService } from 'src/app/Services/TransactionService';
-import { DepositComponent } from 'src/app/Pages/deposit/deposit.component';
 import { User } from 'src/app/Models/User';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { UserService } from 'src/app/Services/UserService';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { LoginService } from 'src/app/Services/login.service';
+
 
 
 
@@ -19,24 +19,19 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class AccountComponent implements OnInit {
 
   account: bankAccount = {
-    savings_accountNumber: 0,
-    checking_accountNumber: 0,
-    savingsbalance: 0,
-    checkingbalance: 0,
+    id: 0,
+    accountNumber: 0,
+    balance: 0,
+    type: "",
 
   };
 
+  savingsAccountNumber: number = 0;
+  checkingAccountNumber: number = 0;
+  savingsBalance: number = 0;
+  checkingBalance: number = 0;
 
-
-  transaction: Transactions = {
-    transid: 0,
-    transtype: "",
-    transamount: 0,
-    account_debited: 0,
-    account_credited: 0,
-    date: new Date()
-  }
-
+  
   user: User = {
 
     id: 0,
@@ -44,50 +39,33 @@ export class AccountComponent implements OnInit {
     password: "",
     name: "",
     address: "",
-    email: "",
-    loggedin: false,
+    email: ""
 
   }
-
-
-
 
 
   constructor(private transactionService: TransactionService,
-    private accountService: AccountService, private userService: UserService,
-    private route: ActivatedRoute) { }
+    private accountService: AccountService, private userService: UserService, 
+    private loginService: LoginService,private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params: ParamMap) => 
-    {this.user.username= (params.get('username') as string);
-  });
-
-    let updatAccountNumbers = this.getAccountNumbers();
-    this.account.checkingbalance = 500;
-    this.account.savingsbalance = 0;
-    this.account.checking_accountNumber = updatAccountNumbers.checking_accountNumber;
-    this.account.savings_accountNumber =  updatAccountNumbers.savings_accountNumber;
-    
-  
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.user.id = params.get('id');
+    }); this.accountService.existingAccounts.forEach(element => {
+      if (element.id == this.user.id) {
+        this.account = element;
+      }
+    }); if(this.account.type == "Savings"){
+      this.savingsAccountNumber = this.account.accountNumber;
+      this.savingsBalance = this.account.balance;
+    } else if(this.account.type == "Checking"){
+      this.checkingAccountNumber = this.account.accountNumber;
+      this.checkingBalance = this.account.balance;
     }
-  
-    getAccountNumbers(): bankAccount {
-      this.accountService.getAccountByUsername(this.user.username).subscribe(
-        (json) => {
-          this.account = json;
-          console.log(json);
-        }
-      ); return this.account;
-    }
-  
-  deposit(eventData: { depositAmount: number }) {
-    this.account.checkingbalance += eventData.depositAmount;
-
-    this.transaction.transtype = "Deposit";
-    this.transaction.transamount = eventData.depositAmount;
-    this.transaction.account_debited = this.account.checking_accountNumber;
   }
+
+  
   transfer(): void {
 
   }
@@ -96,14 +74,7 @@ export class AccountComponent implements OnInit {
 
   }
 
-  addTransaction(): void {
-
-    this.transactionService.postNewTransaction(this.transaction, this.transaction.transtype).subscribe(
-      (json) => {
-        this.transaction = json; console.log(json);
-      }
-    );
-  }
+  
 
 
 

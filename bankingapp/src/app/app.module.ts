@@ -15,6 +15,9 @@ import { RouterModule } from '@angular/router';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { GetTransactionButtonComponent } from './components/get-transaction-button/get-transaction-button.component';
 import { DepositComponent } from './Pages/deposit/deposit.component';
+import { BillpayComponent } from './components/billpay/billpay.component';
+import { TransferComponent } from './components/transfer/transfer.component';
+import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-account.component';
 //import {AuthGuardGuard} from './Services/auth-guard.guard';
 
 @NgModule({
@@ -27,7 +30,10 @@ import { DepositComponent } from './Pages/deposit/deposit.component';
     AccountComponent,
     TransactionsComponent,
     GetTransactionButtonComponent,
-    DepositComponent
+    DepositComponent,
+    BillpayComponent,
+    TransferComponent,
+    PagesopenAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -36,10 +42,13 @@ import { DepositComponent } from './Pages/deposit/deposit.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'account/:username', component: AccountComponent }, //canActivate: [AuthGuardGuard]},
+      { path: 'account/:id', component: AccountComponent }, //canActivate: [AuthGuardGuard]},
       { path: 'login', component: LoginComponent }, //canActivate: [AuthGuardGuard]},
       { path: 'register', component: RegisterComponent },//, canActivate: [AuthGuardGuard] },
-      { path: 'account/:username/deposit', component: DepositComponent }
+      { path: 'account/:id/deposit', component: DepositComponent },
+      {path: 'account/:id/billpay', component: BillpayComponent},
+      {path: 'account/:id/transfer', component: TransferComponent},
+      {path: 'open-account/:id', component: PagesopenAccountComponent}
     ]),
 
   ],

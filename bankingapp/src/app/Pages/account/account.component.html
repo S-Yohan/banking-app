@@ -12,13 +12,13 @@
 		<h1>Bank Account Page</h1>
 		<div class="account">
 			<h2>Savings Account</h2>
-			<p>Account Number: <span class="acct-number">{{account.savings_accountNumber}}</span></p>
-			<p>Balance: $<span class="balance">{{account.savingsbalance}}</span></p>
+			<p>Account Number: <span class="acct-number">{{savingsAccountNumber}}</span></p>
+			<p>Balance: $<span class="balance">{{savingsBalance}}</span></p>
 		</div>
 		<div class="account">
 			<h2>Checking Account</h2>
-			<p>Account Number: <span class="acct-number">{{account.checking_accountNumber}}</span></p>
-			<p>Balance: $<span class="balance">{{account.checkingbalance}}</span></p>
+			<p>Account Number: <span class="acct-number">{{checkingAccountNumber}}</span></p>
+			<p>Balance: $<span class="balance">{{checkingBalance}}</span></p>
 		</div>
 		<div class="transactions">
 			<h2>Recent Transactions</h2>
@@ -30,7 +30,7 @@
 
 		</div>
 		<div class="buttons">
-			<button class="deposit" routerLink="/account/:username/deposit">Deposit</button>
+			<button class="deposit" routerLink="/account/:id/deposit">Deposit</button>
 			<button class="bill-pay" (click)=billPay()>Bill Payments</button>
 			<button class="fund-transfer" (click)=transfer()>Funds Transfer</button>
 		</div>

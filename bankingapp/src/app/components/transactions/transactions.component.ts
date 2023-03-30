@@ -32,14 +32,14 @@ export class TransactionsComponent implements OnInit {
   constructor (private transactionService : TransactionService, private userService: UserService) { }
 
   ngOnInit(): void {
-    //working on displaying transactions from child component <app-get-transaction-button>
+    
     
   }
 
   updateTransactions(){
     this.transactionService.getAllTransactions(this.transaction.account_debited).subscribe(
       (json) => {
-        this.transactions = json;
+        this.transactions = json;console.log(this.transactions)
       }
     );
   }

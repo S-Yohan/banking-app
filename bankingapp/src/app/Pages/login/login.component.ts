@@ -1,7 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/Models/User';
 import { UserService } from 'src/app/Services/UserService';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from 'src/app/Services/AcccountServices';
+import { bankAccount } from 'src/app/Models/bankAccount';
+import { LoginService } from 'src/app/Services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -18,43 +21,44 @@ export class LoginComponent implements OnInit {
     email: '',
     password: '',
     address: '',
-    loggedin: false,
+    
   }
+
   
-  
-  constructor(private userService: UserService, private router : Router) { }
-  
+
+  account: bankAccount = {
+    id: null,
+    accountNumber: null,
+    type: "",
+    balance: 500
+  }
+
+  current_user: User[] = this.loginService.Loggedusers;
+
+  constructor(private userService: UserService, private loginService: LoginService,
+    private accountService: AccountService, private router: ActivatedRoute, private route: Router) { }
+
   ngOnInit(): void {
 
   }
 
-  loginUser() {
-    this.user.loggedin = true;
-    this.userService.logInUser(this.user).subscribe(
-      (json) => {
-        this.user = json;
-      }
-    ); return null;
-  }
+  loginUser(): User {
+
+    this.userService.userDatabase.forEach(element => {if(element.username == this.user.username 
+      && element.password == this.user.password){ this.user = element;}  })
+      return this.user
+    }
 
   invalidUser(): any {
-    let count = 0;
-    this.loginUser();
-    while (this.loginUser() == null && count < 4) {
-      alert("Username/Password is incorrect" + "\n" + "Please try again");
-      count++;
-    } if(this.loginUser == null){
-      alert("You have exceeded the number of attempts" + "\n" + "Please try again in 5 minutes" 
-    + "\n" + "Or contact customer service");
-    } 
-    this.router.navigate(['/account/'+ this.user.username]);
-    
+    let u = this.loginUser();
+    while (u == null) {
+      alert("username or password is incorrect");
+    } this.route.navigate(['/account/' +  u.id]);
 
 
   }
 
-
-
+  
 }
 
 

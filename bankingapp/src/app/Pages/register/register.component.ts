@@ -4,6 +4,7 @@ import { bankAccount } from 'src/app/Models/bankAccount';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { UserService } from 'src/app/Services/UserService';
 import { Router } from '@angular/router';
+import{ RegistrationService } from 'src/app/Services/registration.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,7 @@ export class RegisterComponent implements OnInit {
     username: "",
     password: "",
     address: "",
-    loggedin: false,
+
 
   };
 
@@ -29,18 +30,19 @@ export class RegisterComponent implements OnInit {
 
 
   account: bankAccount = {
-    savings_accountNumber: 0,
-    checking_accountNumber: 0,
-    checkingbalance: 500,
-    savingsbalance: 0,
+    id: 0,
+    accountNumber: 0,
+    balance: 500,
+    type: "",
 
   }
 
   @Output() registerEvent: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(private accountService: AccountService,
-    private userservice: UserService, private router: Router) { }
+  constructor(private router: Router, private rs: RegistrationService,
+    private userservice: UserService) { }
+
 
 
 
@@ -59,19 +61,17 @@ export class RegisterComponent implements OnInit {
   onClick(): void {
     while (this.checkPassword()) {
       this.addUser();
-      this.addAccount();
-      this.router.navigate(['/account/' + this.user.username]);
+      this.router.navigate(['/open-account/' + this.user.id]);
     }
 
   }
 
   addUser(): any {
     this.userservice.createNewUser(this.user).subscribe(json => { console.log(json) })
+    this.rs.new_user.push(this.user);
   }
 
-  addAccount(): any {
-    this.accountService.createNewAccount(this.account, this.user.username).subscribe(json => { console.log(json) });
-  }
+
 }
 
 

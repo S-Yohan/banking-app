@@ -5,13 +5,15 @@ import { LoginComponent } from './Pages/login/login.component';
 import { RegisterComponent } from './Pages/register/register.component';
 import { AccountComponent } from './Pages/account/account.component';
 import { DepositComponent } from './Pages/deposit/deposit.component';
+import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-account.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'account/:username', component: AccountComponent },
-  {path: 'account/:username/deposit', component: DepositComponent}
+  { path: 'account/:id', component: AccountComponent },
+  {path: 'account/:id/deposit', component: DepositComponent},
+  {path: 'open-account/:id', component: PagesopenAccountComponent}
 ];
 
 @NgModule({

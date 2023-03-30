@@ -1,11 +1,10 @@
 export interface User{
     
-    id: number;
+    id: any;
     name: string;
     email: string; 
     username: string;
     password: string;
     address: string;
-    loggedin : boolean;
     
 }

@@ -1,11 +1,12 @@
-import { Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common'
 import { TransactionService } from 'src/app/Services/TransactionService';
 import { Transactions } from 'src/app/Models/Transactions';
 import { User } from 'src/app/Models/User';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { bankAccount } from 'src/app/Models/bankAccount';
 import { AccountService } from 'src/app/Services/AcccountServices';
+import { DepositServiceService } from 'src/app/Services/deposit-service.service';
+import { bankAccount } from 'src/app/Models/bankAccount';
 
 
 
@@ -16,8 +17,15 @@ import { AccountService } from 'src/app/Services/AcccountServices';
 })
 export class DepositComponent implements OnInit {
 
-  
+
   depositAmount: number = 0;
+
+  account: bankAccount = {
+    id: 0,
+    accountNumber: 0,
+    balance: 0,
+    type: "",
+  };
 
   user: User = {
     id: 0,
@@ -25,58 +33,61 @@ export class DepositComponent implements OnInit {
     password: "",
     name: "",
     address: "",
-    email: "",
-    loggedin: true,
-  }
-
-  transaction: Transactions = {
-    transid: 0,
-    transtype: "deposit",
-    transamount: 0,
-    account_debited: 0,
-    account_credited: 0,
-    date: new Date()
-  }
-
-  account: bankAccount = {
-    id: 0,
-    savings_accountNumber: 0,
-    checking_accountNumber: 0,
-    savingsbalance: 0,
-    checkingbalance: 0,
+    email: ""
   }
 
 
-  
-  
-    constructor(private location: Location, private transactionService: TransactionService, private route: ActivatedRoute,
-      private accountService: AccountService) { }
-  
-    ngOnInit(): void {
-      this.route.paramMap.subscribe((params: ParamMap) => 
-    {this.user.username= (params.get('username') as string);
-  });
-    }
-
-    back(): void {
-      this.location.back();
-    }
-
-    //this method is a patch request to update the account balance
-    updatedeposit(): void {
-      
-      this.accountService.deposit(this.user.username, this.depositAmount).subscribe();
-    }
+  constructor(private location: Location, private route: ActivatedRoute,
+    private depositService: DepositServiceService,
+    private accountService: AccountService,
+    private transactionService: TransactionService) { }
 
 
 
-    addTransaction(): void {
-      let a = this.accountService.getAccountByUsername(this.user.username).subscribe(json => {return json});
-      this.transaction.transamount = this.depositAmount;
-      this.transaction.account_debited = 0;
-      //this.transaction.account_credited = a.checking_accountNumber;
-      this.transaction.date = new Date();
-      this.transactionService.postNewTransaction(this.transaction, "deposit").subscribe();
-    }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.user.id = (params.get('id') as string);
+      this.account.type = (params.get('transtype') as string);
+    });
+  }
+
+  back(): void {
+    this.location.back();
+  }
+
+  /*this method is a patch request to update the account balance.
+  addTransaction() is called here as well as the back navigation provided the deposit amount
+  is greater than 0*/
+
+  updatedeposit(): void {
+    if (this.depositAmount > 0) {
+      this.accountService.existingAccounts.forEach(element => {
+        if (element.id == (this.user.id as number)) {
+          element.balance += this.depositAmount;
+          element.accountNumber = this.account.accountNumber;
+        }
+      });
+    } else { alert("Please enter a valid amount") };
+
+  }
+
+
+  /*this method is a post request to add a new transaction to the transaction table
+  */
+  addTransaction(): void {
+
+
+    let transaction: Transactions = {
+      transid: null,
+      account_debited: this.account.accountNumber,
+      account_credited: null,
+      transtype: this.account.type,
+      transamount: this.depositAmount,
+      date: new Date(),
+    }; this.transactionService.postNewTransaction(transaction, this.account.type, this.user.id).subscribe();
+  }
+
+
 
 }
