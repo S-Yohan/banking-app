@@ -4,8 +4,8 @@ import { TransactionService } from 'src/app/Services/TransactionService';
 import { User } from 'src/app/Models/User';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { UserService } from 'src/app/Services/UserService';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { LoginService } from 'src/app/Services/login.service';
+import { ActivatedRoute, Router} from '@angular/router';
+
 
 
 
@@ -17,21 +17,14 @@ import { LoginService } from 'src/app/Services/login.service';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-
-  account: bankAccount = {
-    id: 0,
-    accountNumber: 0,
-    balance: 0,
-    type: "",
-
-  };
+  
 
   savingsAccountNumber: number = 0;
   checkingAccountNumber: number = 0;
   savingsBalance: number = 0;
   checkingBalance: number = 0;
 
-  
+
   user: User = {
 
     id: 0,
@@ -39,45 +32,57 @@ export class AccountComponent implements OnInit {
     password: "",
     name: "",
     address: "",
-    email: ""
+    email: "",
+    accounts: [],
 
   }
 
+  accounts_array: bankAccount[] = [];
 
   constructor(private transactionService: TransactionService,
-    private accountService: AccountService, private userService: UserService, 
-    private loginService: LoginService,private route: ActivatedRoute) { }
+    private accountService: AccountService, private userService: UserService,
+    private route: Router) { }
 
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.user.id = params.get('id');
-    }); this.accountService.existingAccounts.forEach(element => {
-      if (element.id == this.user.id) {
-        this.account = element;
+
+    let id = this.userService.user.id;
+    this.accountService.getAccountById(id).subscribe(json => this.accounts_array);
+
+    this.accounts_array.forEach(element => {
+      if (element.type == "Savings") {
+        this.savingsAccountNumber = element.accountNumber;
+        this.savingsBalance = element.balance;
+      } else {
+        this.checkingAccountNumber = element.accountNumber;
+        this.checkingBalance = element.balance;
       }
-    }); if(this.account.type == "Savings"){
-      this.savingsAccountNumber = this.account.accountNumber;
-      this.savingsBalance = this.account.balance;
-    } else if(this.account.type == "Checking"){
-      this.checkingAccountNumber = this.account.accountNumber;
-      this.checkingBalance = this.account.balance;
-    }
-  }
-
-  
-  transfer(): void {
+    });
 
   }
 
-  billPay(): void {
-
+  routeToDeposit(): void {
+    this.route.navigate(['/account/'+ this.userService.user.id + '/deposit']);
   }
 
-  
 
+transfer(): void {
+
+}
+
+billPay(): void {
+
+}
 
 
 }
+
+
+
+
+
+
+
+
 
 

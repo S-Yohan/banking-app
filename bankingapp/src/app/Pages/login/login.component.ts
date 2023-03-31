@@ -4,7 +4,7 @@ import { UserService } from 'src/app/Services/UserService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { bankAccount } from 'src/app/Models/bankAccount';
-import { LoginService } from 'src/app/Services/login.service';
+
 
 @Component({
   selector: 'app-login',
@@ -21,44 +21,51 @@ export class LoginComponent implements OnInit {
     email: '',
     password: '',
     address: '',
-    
+    accounts: []
+
   }
 
-  
+
 
   account: bankAccount = {
-    id: null,
-    accountNumber: null,
+    id: 0,
+    accountNumber: 0,
     type: "",
-    balance: 500
+    balance: 500,
+    transactions: []
   }
 
-  current_user: User[] = this.loginService.Loggedusers;
 
-  constructor(private userService: UserService, private loginService: LoginService,
+
+  constructor(private userService: UserService,
     private accountService: AccountService, private router: ActivatedRoute, private route: Router) { }
 
   ngOnInit(): void {
 
   }
+  /*this method is called by the login button to iterate over the userDatabase and check if the user exists.
+  the user if found, is then storeed in the current user databse in the loggin service*/
+  loginUser(): void {
 
-  loginUser(): User {
+    this.userService.getUser(this.user).subscribe((json) => {this.user = json; console.log(this.user);
+      this.userService.user = this.user;
+    });
+    
+    
+  }
 
-    this.userService.userDatabase.forEach(element => {if(element.username == this.user.username 
-      && element.password == this.user.password){ this.user = element;}  })
-      return this.user
-    }
-
+  /*this method is called by the login button to navigate to check and alert the user if the password or username are incorrect
+  The next page is navigated.*/
   invalidUser(): any {
     let u = this.loginUser();
     while (u == null) {
       alert("username or password is incorrect");
-    } this.route.navigate(['/account/' +  u.id]);
+    } this.route.navigate(['/account/' + this.user.id]);
 
 
   }
 
-  
+
 }
 
 

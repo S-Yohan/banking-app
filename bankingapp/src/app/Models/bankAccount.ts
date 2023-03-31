@@ -1,9 +1,13 @@
+import { Transactions } from "./Transactions";
+
 export interface bankAccount {
     
-    id: any;
+    
+    id: number;
     balance: number;
-    accountNumber: any;
+    accountNumber: number;
     type: string;
+    transactions: Transactions[];
 
     
 }

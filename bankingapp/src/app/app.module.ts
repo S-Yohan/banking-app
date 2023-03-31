@@ -33,7 +33,8 @@ import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-accoun
     DepositComponent,
     BillpayComponent,
     TransferComponent,
-    PagesopenAccountComponent
+    PagesopenAccountComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +49,8 @@ import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-accoun
       { path: 'account/:id/deposit', component: DepositComponent },
       {path: 'account/:id/billpay', component: BillpayComponent},
       {path: 'account/:id/transfer', component: TransferComponent},
-      {path: 'open-account/:id', component: PagesopenAccountComponent}
+      {path: 'open-account/:id', component: PagesopenAccountComponent},
+      {path: 'account/:id/transactions', component: TransactionsComponent}
     ]),
 
   ],

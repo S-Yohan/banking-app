@@ -1,5 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Transactions } from 'src/app/Models/Transactions';
+import { AccountService } from 'src/app/Services/AcccountServices';
 import { TransactionService } from 'src/app/Services/TransactionService';
 import { UserService } from 'src/app/Services/UserService';
 
@@ -15,8 +16,7 @@ import { UserService } from 'src/app/Services/UserService';
 export class TransactionsComponent implements OnInit {
 
   
-  transactions: Transactions [] = this.transactionService.transaction;
-  
+  transactions: Transactions[] = [];
   
   transaction: Transactions = {
     transid: 0,
@@ -29,17 +29,17 @@ export class TransactionsComponent implements OnInit {
   
   
 
-  constructor (private transactionService : TransactionService, private userService: UserService) { }
+  constructor (private transactionService : TransactionService, private userService: UserService,
+    private ac: AccountService) { }
 
   ngOnInit(): void {
-    
-    
+    this.updateTransactions();
   }
 
   updateTransactions(){
-    this.transactionService.getAllTransactions(this.transaction.account_debited).subscribe(
-      (json) => {
-        this.transactions = json;console.log(this.transactions)
+    this.transactionService.getAllTransactions(this.userService.user.id).subscribe(
+      (json) => {this.transactions = json;
+        
       }
     );
   }

@@ -6,6 +6,7 @@ import { RegisterComponent } from './Pages/register/register.component';
 import { AccountComponent } from './Pages/account/account.component';
 import { DepositComponent } from './Pages/deposit/deposit.component';
 import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-account.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'account/:id', component: AccountComponent },
   {path: 'account/:id/deposit', component: DepositComponent},
-  {path: 'open-account/:id', component: PagesopenAccountComponent}
+  {path: 'open-account/:id', component: PagesopenAccountComponent},
+  {path: 'account/:id/transactions', component: TransactionsComponent}
 ];
 
 @NgModule({

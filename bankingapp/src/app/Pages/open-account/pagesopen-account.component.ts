@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { bankAccount } from 'src/app/Models/bankAccount';
 import { AccountService } from 'src/app/Services/AcccountServices';
-import { RegistrationService } from 'src/app/Services/registration.service';
+import { UserService } from 'src/app/Services/UserService';
 
 
 @Component({
@@ -13,16 +13,16 @@ import { RegistrationService } from 'src/app/Services/registration.service';
 export class PagesopenAccountComponent {
 
   account: bankAccount = {
-    id: null,
-    accountNumber: null,
+    id: 0,
+    accountNumber: 0,
     type: "",
-    balance: 500
+    balance: 500,
+    transactions: []
   }
 
 
 
-  constructor(private router: Router, private accountService: AccountService,
-    private rs: RegistrationService) { }
+  constructor(private router: Router, private accountService: AccountService, private userService: UserService) { }
 
   
   
@@ -30,15 +30,15 @@ export class PagesopenAccountComponent {
   onClick() {
     this.postAccount();
     alert("Account Opened Successfully");
-    this.router.navigate(['account/' + this.rs.new_user[0].id]);
+    this.router.navigate(['account/' + this.userService.user.id]);
 
   }
 
   postAccount(): void {
-    this.accountService.createNewAccount(this.account, this.rs.new_user[0].id).subscribe((json) => {
+    this.accountService.createNewAccount(this.account, this.userService.user.id).subscribe((json) => {
       this.account = json;
       console.log(this.account);
-      this.accountService.existingAccounts.push(this.account);
+      
     });
     
 

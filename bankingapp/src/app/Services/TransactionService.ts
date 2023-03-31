@@ -3,7 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { HttpHeaders } from '@angular/common/http';
 import { Transactions } from '../Models/Transactions';
-import { User } from '../Models/User';
+import { bankAccount } from '../Models/bankAccount';
+
 
 
 
@@ -13,22 +14,32 @@ import { User } from '../Models/User';
 
 export class TransactionService {
 
-  transaction: Transactions [] = [];
+  transactions: Transactions [] = [];
+
+  transaction: Transactions = {
+    transid: 0,
+    account_debited: 0,
+    account_credited: 0,
+    transtype: "",
+    transamount: 0,
+    date: new Date(),
+  }
+
   constructor(private httpClient : HttpClient) { }
 
   
-  getAllTransactions(accnum: number):Observable<any>{
+  getAllTransactions(user_id: number):Observable<any>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.get<any>(`http://127.0.0.1:9000/account/${accnum}`, {headers:header});
+    return this.httpClient.get<Transactions[]>(`http://127.0.0.1:9000/account/${user_id}/transactions`, {headers: header});
   }
   
-  postNewTransaction(transaction: Transactions, type: string, id:number):Observable<any>{
+  postNewTransaction(transaction: Transactions, type: string, id: number):Observable<any>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.post<any>(`http://127.0.0.1:9000/account/${id}/${type}`, transaction);
+    return this.httpClient.post<Transactions>(`http://127.0.0.1:9000/account/${id}/${type}`, transaction ,{headers:header});
     
     
   }

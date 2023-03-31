@@ -11,23 +11,30 @@ export class UserService {
 
   constructor(private httpClient : HttpClient) { }
 
-  userDatabase: User[] = [];
+  user: User = {
+    id: 0,
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    address: "",
+    accounts: []
+  }
 
   
   createNewUser(user : User):Observable<User>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.post<User>(`http://127.0.0.1:9000/register/`, user, {headers:header});
+    return this.httpClient.post<User>(`http://127.0.0.1:9000/register`, user, {headers:header});
   }
-  logInUser (user : User):Observable<User>{
+  
+  getUser(user: User):Observable<User>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.get<User>(`http://127.0.0.1:9000/login/${user.username}`,{
-    observe: 'body', responseType: 'json', headers:header});
+    return this.httpClient.get<User>(`http://127.0.0.1:9000/login`, {headers:header});
+ 
   }
 
-  
- 
 }

@@ -7,6 +7,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { DepositServiceService } from 'src/app/Services/deposit-service.service';
 import { bankAccount } from 'src/app/Models/bankAccount';
+import { UserService } from 'src/app/Services/UserService';
 
 
 
@@ -25,6 +26,7 @@ export class DepositComponent implements OnInit {
     accountNumber: 0,
     balance: 0,
     type: "",
+    transactions: []
   };
 
   user: User = {
@@ -33,41 +35,39 @@ export class DepositComponent implements OnInit {
     password: "",
     name: "",
     address: "",
-    email: ""
+    email: "",
+    accounts: [],
   }
 
 
-  constructor(private location: Location, private route: ActivatedRoute,
-    private depositService: DepositServiceService,
-    private accountService: AccountService,
-    private transactionService: TransactionService) { }
+  constructor(private location: Location,  private depositService: DepositServiceService,
+    private accountService: AccountService, private transactionService: TransactionService,
+    private userservice: UserService) { }
 
 
 
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.user.id = (params.get('id') as string);
-      this.account.type = (params.get('transtype') as string);
-    });
+   
   }
 
   back(): void {
     this.location.back();
   }
-
   /*this method is a patch request to update the account balance.
   addTransaction() is called here as well as the back navigation provided the deposit amount
-  is greater than 0*/
+  is greater than 0
+  The this.accountService.account is also updated*/
+
 
   updatedeposit(): void {
     if (this.depositAmount > 0) {
-      this.accountService.existingAccounts.forEach(element => {
-        if (element.id == (this.user.id as number)) {
-          element.balance += this.depositAmount;
-          element.accountNumber = this.account.accountNumber;
-        }
-      });
+      this.accountService.account.balance += this.depositAmount;
+      this.depositService.deposit(this.accountService.account, this.userservice.user.id, ).subscribe(
+        json => { this.account = json; console.log(this.account); 
+          this.accountService.account = this.account;
+        this.addTransaction();
+        this.back();});
     } else { alert("Please enter a valid amount") };
 
   }
@@ -81,11 +81,11 @@ export class DepositComponent implements OnInit {
     let transaction: Transactions = {
       transid: null,
       account_debited: this.account.accountNumber,
-      account_credited: null,
-      transtype: this.account.type,
+      account_credited: 0,
+      transtype: "deposit",
       transamount: this.depositAmount,
       date: new Date(),
-    }; this.transactionService.postNewTransaction(transaction, this.account.type, this.user.id).subscribe();
+    }; this.transactionService.postNewTransaction(transaction, transaction.transtype, this.account.id).subscribe();
   }
 
 

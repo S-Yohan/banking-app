@@ -30,7 +30,7 @@
 
 		</div>
 		<div class="buttons">
-			<button class="deposit" routerLink="/account/:id/deposit">Deposit</button>
+			<button class="deposit" (click) = "routeToDeposit()">Deposit</button>
 			<button class="bill-pay" (click)=billPay()>Bill Payments</button>
 			<button class="fund-transfer" (click)=transfer()>Funds Transfer</button>
 		</div>
