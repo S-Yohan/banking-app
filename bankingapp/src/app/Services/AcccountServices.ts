@@ -21,6 +21,9 @@ export class AccountService {
     transactions: []
   }
 
+  user_accounts: bankAccount[] = [];
+
+
   /**
    * return an observable which produces a response from a request to post an account type.
    */

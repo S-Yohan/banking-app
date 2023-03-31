@@ -34,10 +34,13 @@ export class PagesopenAccountComponent {
 
   }
 
+
   postAccount(): void {
     this.accountService.createNewAccount(this.account, this.userService.user.id).subscribe((json) => {
-      this.account = json;
-      console.log(this.account);
+      this.accountService.account = json;
+      this.accountService.user_accounts.push(this.accountService.account);
+      console.log(this.accountService.account);
+      
       
     });
     

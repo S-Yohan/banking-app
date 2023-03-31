@@ -49,6 +49,8 @@ export class LoginComponent implements OnInit {
 
     this.userService.getUser(this.user).subscribe((json) => {this.user = json; console.log(this.user);
       this.userService.user = this.user;
+      this.accountService.getAccountById(this.user.id).subscribe((json) => this.accountService.user_accounts = json);
+      
     });
     
     
@@ -57,10 +59,10 @@ export class LoginComponent implements OnInit {
   /*this method is called by the login button to navigate to check and alert the user if the password or username are incorrect
   The next page is navigated.*/
   invalidUser(): any {
-    let u = this.loginUser();
-    while (u == null) {
-      alert("username or password is incorrect");
-    } this.route.navigate(['/account/' + this.user.id]);
+    
+    if (this.user.username == "" || this.user.password == "" || this.loginUser() == null
+    ) {alert("Invalid Username or Password" + "/" + "Please try again"); 
+    } else{ this.route.navigate(['/account/' + this.user.id]);};
 
 
   }

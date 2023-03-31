@@ -37,7 +37,6 @@ export class AccountComponent implements OnInit {
 
   }
 
-  accounts_array: bankAccount[] = [];
 
   constructor(private transactionService: TransactionService,
     private accountService: AccountService, private userService: UserService,
@@ -45,20 +44,17 @@ export class AccountComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-    let id = this.userService.user.id;
-    this.accountService.getAccountById(id).subscribe(json => this.accounts_array);
-
-    this.accounts_array.forEach(element => {
-      if (element.type == "Savings") {
-        this.savingsAccountNumber = element.accountNumber;
-        this.savingsBalance = element.balance;
-      } else {
-        this.checkingAccountNumber = element.accountNumber;
-        this.checkingBalance = element.balance;
+    this.user = this.userService.user;
+    this.accountService.user_accounts.forEach((account) => {
+      if (account.type == "savings") {
+        this.savingsAccountNumber = account.accountNumber;
+        this.savingsBalance = account.balance;
       }
-    });
-
+      else if (account.type == "checking") {
+        this.checkingAccountNumber = account.accountNumber;
+        this.checkingBalance = account.balance;
+      }
+    });      
   }
 
   routeToDeposit(): void {

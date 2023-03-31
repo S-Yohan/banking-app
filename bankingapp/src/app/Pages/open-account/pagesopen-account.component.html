@@ -1,13 +1,13 @@
 <h1>What Account would you like to open?</h1>
 <form>
     <label>
-      <input type="radio" name="account.type" value="savings">
+      <input type="radio" name="selection" value="savings" [(ngModel)]="account.type">
       Savings
     </label>
     <label>
-      <input type="radio" name= "account.type" value="checking">
+      <input type="radio" name= "selection" value="checking" [(ngModel)]="account.type">
       Checking
     </label>
-    <input type="submit" value="CreateAccount()" (click)="onClick()" >
+    <input type="submit" value="CreateAccount" (click)="onClick()" >
   </form>
   
