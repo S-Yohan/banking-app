@@ -28,11 +28,11 @@ export class TransactionService {
   constructor(private httpClient : HttpClient) { }
 
   
-  getAllTransactions(user_id: number):Observable<any>{
+  getAllTransactions(id: number):Observable<any>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.get<Transactions[]>(`http://127.0.0.1:9000/account/${user_id}/transactions`, {headers: header});
+    return this.httpClient.get<Transactions[]>(`http://127.0.0.1:9000/account/${id}/transactions`, {headers: header});
   }
   
   postNewTransaction(transaction: Transactions, type: string, id: number):Observable<any>{

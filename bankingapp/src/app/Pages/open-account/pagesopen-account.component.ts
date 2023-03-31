@@ -30,15 +30,15 @@ export class PagesopenAccountComponent {
   onClick() {
     this.postAccount();
     alert("Account Opened Successfully");
-    this.router.navigate(['account/' + this.userService.user.id]);
+    this.router.navigate(['login']);
 
   }
 
 
   postAccount(): void {
+    
     this.accountService.createNewAccount(this.account, this.userService.user.id).subscribe((json) => {
-      this.accountService.account = json;
-      this.accountService.user_accounts.push(this.accountService.account);
+      this.accountService.account = json;     
       console.log(this.accountService.account);
       
       

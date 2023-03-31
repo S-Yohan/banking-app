@@ -45,16 +45,13 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.user;
-    this.accountService.user_accounts.forEach((account) => {
-      if (account.type == "savings") {
-        this.savingsAccountNumber = account.accountNumber;
-        this.savingsBalance = account.balance;
-      }
-      else if (account.type == "checking") {
-        this.checkingAccountNumber = account.accountNumber;
-        this.checkingBalance = account.balance;
-      }
-    });      
+    if(this.accountService.account.type == "savings"){
+      this.savingsAccountNumber = this.accountService.account.accountNumber;
+      this.savingsBalance = this.accountService.account.balance;
+    } else{
+      this.checkingAccountNumber = this.accountService.account.accountNumber;
+      this.checkingBalance = this.accountService.account.balance;
+    }    
   }
 
   routeToDeposit(): void {
