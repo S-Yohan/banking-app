@@ -9,11 +9,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegisterComponent } from './Pages/register/register.component';
 import { AccountComponent } from './Pages/account/account.component';
-
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TransactionsComponent } from './components/transactions/transactions.component';
-import { GetTransactionButtonComponent } from './components/get-transaction-button/get-transaction-button.component';
 import { DepositComponent } from './Pages/deposit/deposit.component';
 import { BillpayComponent } from './components/billpay/billpay.component';
 import { TransferComponent } from './components/transfer/transfer.component';
@@ -28,13 +25,11 @@ import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-accoun
     LoginComponent,
     RegisterComponent,
     AccountComponent,
-    TransactionsComponent,
-    GetTransactionButtonComponent,
     DepositComponent,
     BillpayComponent,
     TransferComponent,
     PagesopenAccountComponent,
-    TransactionsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -47,14 +42,14 @@ import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-accoun
       { path: 'login', component: LoginComponent }, //canActivate: [AuthGuardGuard]},
       { path: 'register', component: RegisterComponent },//, canActivate: [AuthGuardGuard] },
       { path: 'account/:id/deposit', component: DepositComponent },
-      {path: 'account/:id/billpay', component: BillpayComponent},
-      {path: 'account/:id/transfer', component: TransferComponent},
-      {path: 'open-account/:id', component: PagesopenAccountComponent},
-      {path: 'account/:id/transactions', component: TransactionsComponent}
+      { path: 'account/:id/billpay', component: BillpayComponent },
+      { path: 'account/:id/transfer', component: TransferComponent },
+      { path: 'open-account/:id', component: PagesopenAccountComponent }
+      
     ]),
 
   ],
-  
+
   providers: [],
   bootstrap: [AppComponent]
 })

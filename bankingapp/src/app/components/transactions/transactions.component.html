@@ -1,6 +1,0 @@
-<app-get-transaction-button (updateevent) = "updateTransactions()"></app-get-transaction-button>
-<ul>
-    <li *ngFor="let transaction of this.transactions">
-        {{this.transaction.date}} - ${{this.transaction.transamount}} - {{this.transaction.transtype}}
-    </li>
-</ul>

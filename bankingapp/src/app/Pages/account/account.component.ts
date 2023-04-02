@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { bankAccount } from 'src/app/Models/bankAccount';
 import { TransactionService } from 'src/app/Services/TransactionService';
 import { User } from 'src/app/Models/User';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { UserService } from 'src/app/Services/UserService';
 import { ActivatedRoute, Router} from '@angular/router';
+import { Transactions } from 'src/app/Models/Transactions';
 
 
 
@@ -17,8 +18,12 @@ import { ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  
 
+  
+  transactiondate: Date = new Date();
+  transactiontype: string = "";
+  transactionamount: number = 0;
+ 
   savingsAccountNumber: number = 0;
   checkingAccountNumber: number = 0;
   savingsBalance: number = 0;
@@ -51,12 +56,20 @@ export class AccountComponent implements OnInit {
     } else{
       this.checkingAccountNumber = this.accountService.account.accountNumber;
       this.checkingBalance = this.accountService.account.balance;
+    }
+    for(let t of this.accountService.account.transactions){
+      this.transactiondate = t.date;
+      this.transactiontype = t.transtype;
+      this.transactionamount = t.transamount;
+
     }    
+    
   }
 
   routeToDeposit(): void {
     this.route.navigate(['/account/'+ this.userService.user.id + '/deposit']);
   }
+
 
 
 transfer(): void {

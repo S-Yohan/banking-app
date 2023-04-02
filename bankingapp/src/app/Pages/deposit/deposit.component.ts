@@ -3,7 +3,7 @@ import { Location } from '@angular/common'
 import { TransactionService } from 'src/app/Services/TransactionService';
 import { Transactions } from 'src/app/Models/Transactions';
 import { User } from 'src/app/Models/User';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Route, Router } from '@angular/router';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { DepositServiceService } from 'src/app/Services/deposit-service.service';
 import { bankAccount } from 'src/app/Models/bankAccount';
@@ -42,7 +42,7 @@ export class DepositComponent implements OnInit {
 
   constructor(private location: Location,  private depositService: DepositServiceService,
     private accountService: AccountService, private transactionService: TransactionService,
-    private userservice: UserService) { }
+    private userservice: UserService, private route: Router) { }
 
 
 
@@ -67,7 +67,7 @@ export class DepositComponent implements OnInit {
         json => { this.account = json; console.log(this.account); 
           this.accountService.account = this.account;
         this.addTransaction();
-        this.back();});
+        ;});
     } else { alert("Please enter a valid amount") };
 
   }

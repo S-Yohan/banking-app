@@ -8,8 +8,8 @@
 </head>
 
 <body>
-	<div class = "container">
-		<h1> Welcome: {{this.user.name}}</h1>
+	<div class="container">
+		<h1> Welcome: {{this.user.name | uppercase}}</h1>
 	</div>
 	<div class="container">
 		<h1>Bank Account Page</h1>
@@ -25,15 +25,13 @@
 		</div>
 		<div class="transactions">
 			<h2>Recent Transactions</h2>
-			<app-transactions></app-transactions>
-
-			<ul>
-				<li>03/20/2023 - $500.00 - Deposit</li>
+			<ul >
+				<li>{{this.transactiondate}} {{this.transactionamount | currency}} {{this.transactiontype | uppercase}}</li>								
 			</ul>
 
 		</div>
 		<div class="buttons">
-			<button class="deposit" (click) = "routeToDeposit()">Deposit</button>
+			<button class="deposit" (click)="routeToDeposit()">Deposit</button>
 			<button class="bill-pay" (click)=billPay()>Bill Payments</button>
 			<button class="fund-transfer" (click)=transfer()>Funds Transfer</button>
 		</div>

@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
   onClick(): void {
     //while (this.checkPassword()) {
     this.addUser();
-    this.router.navigate(['/open-account/' + this.user.id]);
+    this.router.navigate(['/open-account/' + this.userservice.user.id]);
   //}
 
   }

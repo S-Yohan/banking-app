@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
       this.userService.user = this.user;
     }); this.accountService.getAccountById(this.user.id).subscribe((json) => {
       this.accountService.user_accounts = json;
-      this.route.navigate(['/account/' + this.user.id]);
+      this.route.navigate(['/account/' + this.userService.user.id]);
       return this.user;
     });
 
