@@ -9,5 +9,6 @@ export interface User{
     password: string;
     address: string;
     accounts: bankAccount[];
+    loginStatus: boolean;
     
 }

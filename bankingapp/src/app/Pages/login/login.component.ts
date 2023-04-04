@@ -1,10 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injectable, Injector, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/Models/User';
 import { UserService } from 'src/app/Services/UserService';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { bankAccount } from 'src/app/Models/bankAccount';
 import { HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { RouteGuardService } from 'src/app/Services/route-guard.service';
 
 
 @Component({
@@ -12,6 +14,8 @@ import { HttpResponse } from '@angular/common/http';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
+@Injectable()
 export class LoginComponent implements OnInit {
 
   user: User = {
@@ -22,7 +26,8 @@ export class LoginComponent implements OnInit {
     email: "",
     password: "",
     address: "",
-    accounts: []
+    accounts: [],
+    loginStatus: false,
 
   }
 
@@ -38,9 +43,13 @@ export class LoginComponent implements OnInit {
   }
 
 
-
+  
   constructor(private userService: UserService,
-    private accountService: AccountService, private router: ActivatedRoute, private route: Router) { }
+    private accountService: AccountService, private router: ActivatedRoute, private route: Router,
+    private rs: RouteGuardService) { }
+  
+
+ 
 
   ngOnInit(): void {
 
@@ -54,7 +63,14 @@ export class LoginComponent implements OnInit {
 
     this.userService.getUser(this.user).subscribe((json) => {
       this.user = json; console.log(this.user);
-      this.route.navigate(['/account/' + this.user.id]);      
+      if(this.user != null ){
+        this.userService.user = this.user;
+        this.userService.user.loginStatus = true;
+        this.route.navigate(['/account/' + this.user.id]);
+      } else {
+        alert("User/password incorrect" + "/n" + "Please try again");
+      }
+            
     });       
       return this.user;    
 

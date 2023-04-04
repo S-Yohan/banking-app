@@ -18,7 +18,8 @@ export class UserService {
     username: "",
     password: "",
     address: "",
-    accounts: []
+    accounts: [],
+    loginStatus: false,
   }
 
   

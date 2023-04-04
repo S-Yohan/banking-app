@@ -41,7 +41,10 @@ USER STORY #1
 --the registration page URL: `http://localhost:4200/register`. On this page clients will input data "name", "username", "password", "confirmPassword", "email", and "address" (city only).
 -HTML input form is used here with property binding to the variables in the register.ts file.
 
--The user fields are sent through the service.ts file --by clicking the "register" button, a POST request is sent to the server to persist the "user" object database and generate a "secure token". Once registration is complete, the user is taken to the user login page to login. A Route Guard feature is used to here to ensure that users do not bypass this page.to persist the user in the 
+-The user fields are assigned to the user object properties and then submitted by a POST request "createNewUser" method in the service.ts file -by clicking the "register" button.
+-The "user" object should persist in the database and generate a "secure token". 
+-Once registration is complete, the user object is returned as an observable and the user is taken to the user login page to verify login credentials. 
+-A Route Guard feature is used to here to ensure that users do not bypass this page.to persist the user in the 
 
 
 
@@ -51,31 +54,49 @@ USER STORY #2
 
 -All new clients will be routed to an open-account page which uses another input form with radio buttons to select EITHER savings or checking.
 -Opening Balance is $500 for each new account.
--The account object is submitted to the backend "Account controller". The object is persisted, after a UNIQUE random number of type double has been generated in the database.
--That object id persisted and then returned to the frontend where it is stored in the accountServices class.
--The user and the account databases have been linked by a ONE_TO_MANY reference.
+-The account object is submitted to the server by a POST request "createNewAccont" in the AccountServices class.
+-The object is persisted, after a UNIQUE random number of type double has been generated in the database.
+-That object is then returned to the frontend where it is stored as a global variable in the accountServices class.
+-Becase the "accounts" objects are refrenced in server repository in a MANY-TO-ONE conext, we ensure that new accounts are created under a specific user.
 
 
 USER STORY #3
 
---the login page URL: `http://localhost:4200/login` On this page the clients will input data "username" and "password". By clicking the submit button a GET request is executed to the above url path to return a client object. User is a a JSON object in the request body.
+--the login page URL: `http://localhost:4200/login` 
+-On this page the clients will input data "username" and "password". 
+-By clicking the submit button a GET request, "getUser", is executed to return an Observable of type User.
+-That value is assigned to a global variable in the UserService class.
+
+USER STORY #4
 
 -- Account page url: `http://localhost:4200/account/{id}` 
-On the account page OnInit automatically updates "savingsaccountNumber" and "checkingAccountNumber" as well as "savingsbalance"' and "checkingbalance".
-a GET request should be sent using the above URL to return the account object from the Accounts table.
+-On the account page the OnInit method ensures that current data is displayed.
+-Here interpolation is used to update  the "savingsaccountNumber" and "checkingAccountNumber" as well as "savingsbalance"' and "checkingbalance". 
+-ONE type of account is displayed EITHER "savings" or "checking", and the corresponding account numbers and balances (this is facilitated by an  *ngIf directive).
+
+USER STORY #5
 
 --Deposit page url: `http://localhost:4200/account/{id}/deposit`
-On the deposit page the client will input an amount for deposit "depositAmount". Clicking the deposit button should execute a patch request to update checkingbalance for the currently logged in user. The currenly loggin user will have its "loggedin" property set to true in the clients table.
+-On the deposit page the client will input an amount for deposit "depositAmount". 
+-Clicking the deposit button should execute a POST request to create a new transaction.
+-The Observable of type Transactions is stored as a global variable.
+- The current account balance is also updated in the server database as well as in the current global variable.
+
+
+USER STORY #6
 
 --Transfer page url: `http://localhost:4200/account/{id}/transfer`
--this route needs to configured in the app.module.ts file as well as the app-routing.module.ts
--On this page the user will input a "transfer amount", "Sender" account and a "Receiver" account.
--the account table should be updated accordingly.
--the transaction table should also be updated.
+-this route needs to be configured in the app.module.ts file as well as the app-routing.module.ts
+-On this page the user will input a "transfer amount", "Sender's" account and a "Receiver's" account.
+-By clicking the "transfer" button a POST request, "postNewTransaction" should executed from the TransactionService.ts file to return an Observable of type Transactions.
+-On the server end, the Transaction object should persist in the database and update the balance of the "Sender's" account to which it is mapped to by a Join Column.
+
+USER STORY #7
 
 --Bill Payments url: `http://localhost:4200/account/{id}/billpay`
 -this route needs to be configured in the app.module.ts file as well as the app-routing-module.ts
 -On this page the user will click the "Payee" button and select the payee from a list
 -The user will then put in a "Pay Amount".
 -the user will then click on the "Pay" button.
--the transaction table will need to be updated as well as the account tables.
+-The button will execute a POST request in the TransactionService.ts component so that an Observable of type Transactions is returned from the server.
+-In the server database the payer's account balance (to which the transaction maps to via a Join Column) should be updated.

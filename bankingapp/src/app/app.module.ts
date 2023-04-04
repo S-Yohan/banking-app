@@ -15,7 +15,7 @@ import { DepositComponent } from './Pages/deposit/deposit.component';
 import { BillpayComponent } from './components/billpay/billpay.component';
 import { TransferComponent } from './components/transfer/transfer.component';
 import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-account.component';
-//import {AuthGuardGuard} from './Services/auth-guard.guard';
+import { RouteGuardService } from './Services/route-guard.service';
 
 @NgModule({
   declarations: [
@@ -39,9 +39,9 @@ import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-accoun
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'account/:id', component: AccountComponent }, //canActivate: [AuthGuardGuard]},
-      { path: 'login', component: LoginComponent }, //canActivate: [AuthGuardGuard]},
-      { path: 'register', component: RegisterComponent },//, canActivate: [AuthGuardGuard] },
+      { path: 'account/:id', component: AccountComponent, canActivate: [RouteGuardService] }, 
+      { path: 'login', component: LoginComponent, canActivate: [RouteGuardService] },
+      { path: 'register', component: RegisterComponent },
       { path: 'account/:id/deposit', component: DepositComponent },
       { path: 'account/:id/billpay', component: BillpayComponent },
       { path: 'account/:id/transfer', component: TransferComponent },
@@ -51,7 +51,7 @@ import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-accoun
 
   ],
 
-  providers: [],
+  providers: [RouteGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

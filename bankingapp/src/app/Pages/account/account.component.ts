@@ -20,7 +20,7 @@ export class AccountComponent implements OnInit {
 
   @Input() ngSwitch: any;
 
-
+  
   
   savingsAccountNumber: number = 0;
   checkingAccountNumber: number = 0;
@@ -40,6 +40,7 @@ export class AccountComponent implements OnInit {
     address: "",
     email: "",
     accounts: [],
+    loginStatus: true,
 
   }
 

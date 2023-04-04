@@ -4,7 +4,7 @@ export interface Transactions{
     account_credited: number;
     transtype: string;
     transamount: number;
-    date: Date;
+    timestamp: any;
     
     
 

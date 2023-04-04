@@ -30,11 +30,11 @@ export class DepositComponent implements OnInit {
 
   transaction: Transactions = {
     transid: null,
-    account_debited: this.accountService.account.accountNumber,
+    account_debited: 0,
     account_credited: 0,
     transtype: "deposit",
-    transamount: this.depositAmount,
-    date: new Date(),
+    transamount: 0,
+    timestamp: null,
   };
 
 
@@ -71,6 +71,9 @@ export class DepositComponent implements OnInit {
   /*this method is a post request to add a new transaction to the transaction table
   */
   addTransaction(): void {
+
+    this.transaction.account_credited = this.accountService.account.accountNumber;
+    this.transaction.transamount = this.depositAmount;
 
     this.transactionService.postNewTransaction(this.transaction, this.transaction.transtype, this.userservice.user.id).subscribe(
       json => {this.transaction = json;

@@ -22,15 +22,14 @@ export class TransactionService {
     account_credited: 0,
     transtype: "",
     transamount: 0,
-    date: new Date(),
+    timestamp: null,
   }
 
-  constructor(private httpClient : HttpClient) { }
-  
+  constructor(private httpClient : HttpClient) { }  
  
   
   
-  postNewTransaction(transaction: Transactions, type: string, id: number):Observable<any>{
+  postNewTransaction(transaction: Transactions, type: string, id: number):Observable<Transactions>{
     let header : HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
