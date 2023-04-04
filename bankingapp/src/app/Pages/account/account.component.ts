@@ -21,16 +21,13 @@ export class AccountComponent implements OnInit {
   @Input() ngSwitch: any;
 
 
-  transactiondate: Date = new Date();
-  transactiontype: string = "";
-  transactionamount: number = 0;
-
+  
   savingsAccountNumber: number = 0;
   checkingAccountNumber: number = 0;
   savingsBalance: number = 0;
   checkingBalance: number = 0;
 
-  transactions: Transactions[] = [];
+  transactions: Transactions[] = this.transactionService.transactions;
 
   switch_account_display: boolean = false;
 
@@ -54,14 +51,19 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.user;
-    if (this.accountService.account.type == "savings") {
-      this.savingsAccountNumber = this.accountService.account.accountNumber;
-      this.savingsBalance = this.accountService.account.balance;
-      this.switch_account_display = true;
-    } else {
-      this.checkingAccountNumber = this.accountService.account.accountNumber;
-      this.checkingBalance = this.accountService.account.balance;
-    }
+    this.accountService.getAccountById(this.user.id).subscribe(json => { this.accountService.account = json;
+
+      if (this.accountService.account.type == "savings") {
+        this.switch_account_display = true;
+        this.savingsAccountNumber = this.accountService.account.accountNumber;
+        this.savingsBalance = this.accountService.account.balance;
+        
+      } else {
+        this.checkingAccountNumber = this.accountService.account.accountNumber;
+        this.checkingBalance = this.accountService.account.balance;
+      }
+    
+    });    
 
   }
 

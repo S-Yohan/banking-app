@@ -14,13 +14,13 @@
 	</div>
 	<div class="container" >
 		
-		<div *ngIf = "switch_account_display"; else elseBlock class="account">
+		<div class="account" *ngIf = "switch_account_display" else elseBlock >
 			<h2>Savings Account</h2>
 			<p>Account Number: <span class="acct-number">{{this.savingsAccountNumber}}</span></p>
 			<p>Balance: $<span class="balance">{{this.savingsBalance}}</span></p>
 		</div>
 
-		<div class="account" #elseBlock >
+		<div class="account" #elseBlock>
 			<h2>Checking Account</h2>
 			<p>Account Number: <span class="acct-number">{{this.checkingAccountNumber}}</span></p>
 			<p>Balance: $<span class="balance">{{this.checkingBalance}}</span></p>
@@ -29,7 +29,7 @@
 		
 		<div class="transactions">
 			<h2>Recent Transactions</h2>
-			<ul><button type = "button" (click) = "addTransaction()">More Transactions</button>
+			<ul>
 				<li *ngFor="let transaction of transactions">
 					
 					<p>Transaction Type: {{transaction.transtype | lowercase}}</p>

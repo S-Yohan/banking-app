@@ -54,12 +54,9 @@ export class LoginComponent implements OnInit {
 
     this.userService.getUser(this.user).subscribe((json) => {
       this.user = json; console.log(this.user);
-      
-    }); this.accountService.getAccountById(this.user.id).subscribe((json) => {
-      this.accountService.account = json;
-      this.route.navigate(['/account/' + this.user.id]);
-      return this.user;
-    });
+      this.route.navigate(['/account/' + this.user.id]);      
+    });       
+      return this.user;    
 
   }
 

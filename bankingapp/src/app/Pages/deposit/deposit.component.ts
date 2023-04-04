@@ -28,31 +28,30 @@ export class DepositComponent implements OnInit {
     transactions: []
   };
 
-  user: User = {
-    id: 0,
-    username: "",
-    password: "",
-    name: "",
-    address: "",
-    email: "",
-    accounts: [],
-  }
+  transaction: Transactions = {
+    transid: null,
+    account_debited: this.accountService.account.accountNumber,
+    account_credited: 0,
+    transtype: "deposit",
+    transamount: this.depositAmount,
+    date: new Date(),
+  };
 
 
-  constructor(private location: Location,
-    private accountService: AccountService, private transactionService: TransactionService,
-    private userservice: UserService, private route: Router) { }
+    constructor(private location: Location,
+      private accountService: AccountService, private transactionService: TransactionService,
+      private userservice: UserService, private route: Router) { }
 
 
 
 
   ngOnInit(): void {
 
-  }
+    }
 
   back(): void {
-    this.location.back();
-  }
+      this.location.back();
+    }
   /*this method is a patch request to update the account balance.
   addTransaction() is called here as well as the back navigation provided the deposit amount
   is greater than 0
@@ -60,26 +59,25 @@ export class DepositComponent implements OnInit {
 
 
   updatedeposit(): void {
-    if (this.depositAmount > 0) {
-      this.accountService.account.balance += this.depositAmount;      
-    } else { alert("Please enter a valid amount") };
+      if (this.depositAmount > 0) {
+        this.accountService.account.balance += this.depositAmount;
+        this.addTransaction();
 
-  }
+      } else { alert("Please enter a valid amount") };
+
+    }
 
 
   /*this method is a post request to add a new transaction to the transaction table
   */
   addTransaction(): void {
 
-
-    let transaction: Transactions = {
-      transid: null,
-      account_debited: this.account.accountNumber,
-      account_credited: 0,
-      transtype: "deposit",
-      transamount: this.depositAmount,
-      date: new Date(),
-    }; this.transactionService.postNewTransaction(transaction, transaction.transtype, this.account.id).subscribe();
+    this.transactionService.postNewTransaction(this.transaction, this.transaction.transtype, this.userservice.user.id).subscribe(
+      json => {this.transaction = json;
+        this.transactionService.transactions.push(this.transaction);
+        this.back();
+      }
+    );
   }
 
 
