@@ -4,9 +4,8 @@ import { TransactionService } from 'src/app/Services/TransactionService';
 import { User } from 'src/app/Models/User';
 import { AccountService } from 'src/app/Services/AcccountServices';
 import { UserService } from 'src/app/Services/UserService';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Transactions } from 'src/app/Models/Transactions';
-
 
 
 
@@ -19,16 +18,21 @@ import { Transactions } from 'src/app/Models/Transactions';
 })
 export class AccountComponent implements OnInit {
 
-  
+  @Input() ngSwitch: any;
+
+
   transactiondate: Date = new Date();
   transactiontype: string = "";
   transactionamount: number = 0;
- 
+
   savingsAccountNumber: number = 0;
   checkingAccountNumber: number = 0;
   savingsBalance: number = 0;
   checkingBalance: number = 0;
 
+  transactions: Transactions[] = [];
+
+  switch_account_display: boolean = false;
 
   user: User = {
 
@@ -44,41 +48,42 @@ export class AccountComponent implements OnInit {
 
 
   constructor(private transactionService: TransactionService,
-    private accountService: AccountService, private userService: UserService,
+    public accountService: AccountService, private userService: UserService,
     private route: Router) { }
 
 
   ngOnInit(): void {
     this.user = this.userService.user;
-    if(this.accountService.account.type == "savings"){
+    if (this.accountService.account.type == "savings") {
       this.savingsAccountNumber = this.accountService.account.accountNumber;
       this.savingsBalance = this.accountService.account.balance;
-    } else{
+      this.switch_account_display = true;
+    } else {
       this.checkingAccountNumber = this.accountService.account.accountNumber;
       this.checkingBalance = this.accountService.account.balance;
     }
-    for(let t of this.accountService.account.transactions){
-      this.transactiondate = t.date;
-      this.transactiontype = t.transtype;
-      this.transactionamount = t.transamount;
 
-    }    
-    
   }
+
+
+  addTransaction(): void {
+
+  }
+
 
   routeToDeposit(): void {
-    this.route.navigate(['/account/'+ this.userService.user.id + '/deposit']);
+    this.route.navigate(['/account/' + this.userService.user.id + '/deposit']);
   }
 
 
 
-transfer(): void {
+  transfer(): void {
 
-}
+  }
 
-billPay(): void {
+  billPay(): void {
 
-}
+  }
 
 
 }

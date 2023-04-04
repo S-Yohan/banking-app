@@ -31,15 +31,32 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 The main page URL route: `http://localhost:4200/`
 
+***USER STORIES**
 
---From the main page a new client should be able to create a new client profile and open a new account with a click on the "create account" button.
+USER STORY #1
+
+--From the main page a new client should be able to create a new client profile or login to an exising user profile.
 
 
---the registration page URL: `http://localhost:4200/register`. On this page clients will input data "name", "username", "password", "confirmPassword", "email", and "address" (city only). All new clients will open an account with BOTH a savings and a checking account.
---by clicking the "register" button, a POST request is sent to the server to persist the "client" object. 
+--the registration page URL: `http://localhost:4200/register`. On this page clients will input data "name", "username", "password", "confirmPassword", "email", and "address" (city only).
+-HTML input form is used here with property binding to the variables in the register.ts file.
+
+-The user fields are sent through the service.ts file --by clicking the "register" button, a POST request is sent to the server to persist the "user" object database and generate a "secure token". Once registration is complete, the user is taken to the user login page to login. A Route Guard feature is used to here to ensure that users do not bypass this page.to persist the user in the 
+
+
+
+USER STORY #2
 
 --To setup an account the account page - URL: `http://localhost:4200/open-account/{user_id}` eg. `http://localhost:4200/open-account/1` should open an account under the user whose user_id = 1.
-This page will have a separate "button" component to route to the user's account page.
+
+-All new clients will be routed to an open-account page which uses another input form with radio buttons to select EITHER savings or checking.
+-Opening Balance is $500 for each new account.
+-The account object is submitted to the backend "Account controller". The object is persisted, after a UNIQUE random number of type double has been generated in the database.
+-That object id persisted and then returned to the frontend where it is stored in the accountServices class.
+-The user and the account databases have been linked by a ONE_TO_MANY reference.
+
+
+USER STORY #3
 
 --the login page URL: `http://localhost:4200/login` On this page the clients will input data "username" and "password". By clicking the submit button a GET request is executed to the above url path to return a client object. User is a a JSON object in the request body.
 

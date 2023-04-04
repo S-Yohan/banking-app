@@ -30,6 +30,7 @@ import { PagesopenAccountComponent } from './Pages/open-account/pagesopen-accoun
     TransferComponent,
     PagesopenAccountComponent,
 
+
   ],
   imports: [
     BrowserModule,

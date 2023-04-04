@@ -5,7 +5,6 @@ import { Transactions } from 'src/app/Models/Transactions';
 import { User } from 'src/app/Models/User';
 import { ActivatedRoute, ParamMap, Route, Router } from '@angular/router';
 import { AccountService } from 'src/app/Services/AcccountServices';
-import { DepositServiceService } from 'src/app/Services/deposit-service.service';
 import { bankAccount } from 'src/app/Models/bankAccount';
 import { UserService } from 'src/app/Services/UserService';
 
@@ -40,7 +39,7 @@ export class DepositComponent implements OnInit {
   }
 
 
-  constructor(private location: Location,  private depositService: DepositServiceService,
+  constructor(private location: Location,
     private accountService: AccountService, private transactionService: TransactionService,
     private userservice: UserService, private route: Router) { }
 
@@ -48,7 +47,7 @@ export class DepositComponent implements OnInit {
 
 
   ngOnInit(): void {
-   
+
   }
 
   back(): void {
@@ -62,12 +61,7 @@ export class DepositComponent implements OnInit {
 
   updatedeposit(): void {
     if (this.depositAmount > 0) {
-      this.accountService.account.balance += this.depositAmount;
-      this.depositService.deposit(this.accountService.account, this.userservice.user.id, ).subscribe(
-        json => { this.account = json; console.log(this.account); 
-          this.accountService.account = this.account;
-        this.addTransaction();
-        ;});
+      this.accountService.account.balance += this.depositAmount;      
     } else { alert("Please enter a valid amount") };
 
   }

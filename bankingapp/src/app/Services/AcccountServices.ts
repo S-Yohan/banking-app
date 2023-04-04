@@ -19,9 +19,11 @@ export class AccountService {
     type: "",
     balance: 500,
     transactions: []
+
   }
 
-  user_accounts: bankAccount[] = [];
+  
+
 
 
   /**
@@ -38,11 +40,11 @@ export class AccountService {
    * return an observable which produces a response from a request to GET an account by id.
    * 
    */
-  getAccountById(id: number): Observable<bankAccount[]> {
+  getAccountById(id: number): Observable<bankAccount> {
     let header: HttpHeaders = new HttpHeaders();
     header.append("accept", "text/json");
     header.append("Access-Control-Allow-Origin", "*");
-    return this.httpClient.get<bankAccount[]>(`http://127.0.0.1:9000/account/${id}`, {headers:header});
+    return this.httpClient.get<bankAccount>(`http://127.0.0.1:9000/account/${id}`, {headers:header});
     
   }
   

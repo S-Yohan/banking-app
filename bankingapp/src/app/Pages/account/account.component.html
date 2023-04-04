@@ -8,27 +8,38 @@
 </head>
 
 <body>
+	<h1>Bank Account Page</h1>
 	<div class="container">
 		<h1> Welcome: {{this.user.name | uppercase}}</h1>
 	</div>
-	<div class="container">
-		<h1>Bank Account Page</h1>
-		<div class="account">
+	<div class="container" >
+		
+		<div *ngIf = "switch_account_display"; else elseBlock class="account">
 			<h2>Savings Account</h2>
 			<p>Account Number: <span class="acct-number">{{this.savingsAccountNumber}}</span></p>
 			<p>Balance: $<span class="balance">{{this.savingsBalance}}</span></p>
 		</div>
-		<div class="account">
+
+		<div class="account" #elseBlock >
 			<h2>Checking Account</h2>
 			<p>Account Number: <span class="acct-number">{{this.checkingAccountNumber}}</span></p>
 			<p>Balance: $<span class="balance">{{this.checkingBalance}}</span></p>
 		</div>
+	
+		
 		<div class="transactions">
 			<h2>Recent Transactions</h2>
-			<ul >
-				<li>{{this.transactiondate}} {{this.transactionamount | currency}} {{this.transactiontype | uppercase}}</li>								
-			</ul>
+			<ul><button type = "button" (click) = "addTransaction()">More Transactions</button>
+				<li *ngFor="let transaction of transactions">
+					
+					<p>Transaction Type: {{transaction.transtype | lowercase}}</p>
+					<p>Transaction Amount: ${{transaction.transamount | currency}}</p>
+					<p>Transaction Date: {{transaction.date}}</p>
 
+				</li>
+
+			</ul>			
+			
 		</div>
 		<div class="buttons">
 			<button class="deposit" (click)="routeToDeposit()">Deposit</button>
