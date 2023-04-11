@@ -16,13 +16,16 @@ export class RouteGuardService implements CanActivate{
   
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean | UrlTree {
     if (this.authService.isLoggedIn()) {
       return true;
     } else {
-      return this.router.createUrlTree(['/login']);
+      //window.alert("You don't have permission to view this page");
+      return this.router.createUrlTree(['/login']); 
+      
+      
     }
   }
 }

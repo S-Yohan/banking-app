@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
         this.userService.user.loginStatus = true;
         this.route.navigate(['/account/' + this.user.id]);
       } else {
-        alert("User/password incorrect" + "/n" + "Please try again");
+        window.alert("User/password incorrect" + "/n" + "Please try again");
       }
             
     });       
